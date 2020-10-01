@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Resizable from '../Component/Resizable';
 
 class LeafleatTable extends Component {
-  renderComponentTableMap = () => {
+  renderComponentTableMap = (options = {}) => {
     const { type = 'resizable' } = this.props;
     switch (type) {
       case 'resizable':
-        return <Resizable />;
+        return <Resizable {...options}/>;
+      case 'accordion':
+        return 'hello'
       default:
         break;
     }
