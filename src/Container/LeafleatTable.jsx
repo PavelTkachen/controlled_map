@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Resizable from '../Component/Resizable';
+import Resizable from '../Widgets/Resizable';
 
 class LeafleatTable extends Component {
   renderComponentTableMap = (options = {}) => {

@@ -161,6 +161,7 @@ const EnhancedTableToolbar = (props) => {
           Nutrition
         </Typography>
       )}
+      <button>Карта</button>
     </Toolbar>
   );
 };
