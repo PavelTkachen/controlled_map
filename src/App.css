@@ -2,7 +2,4 @@
     text-align: center;
 }
 
-.leaflet-container {
-    height: 650px;
-    width: 1500px;
-}
+.leaflet-container {  width: 100vw;  height: 100vh; }

@@ -43,7 +43,7 @@ export default function CustomDrawer() {
       >
         <Table />
       </Resizable>
-      <div style={{ ...STYLE, width: "100%", maxWidth: '70%', height: '100%' }}>
+      <div>
         <Map />
       </div>
     </div>
