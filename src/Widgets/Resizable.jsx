@@ -21,6 +21,10 @@ const CONTAINER_STYLE = {
   overflow: 'hidden',
 }
 
+const TABLE_CONTAINER_STYLE = {
+  width: '80%',
+}
+
 const DEFAULT_SIZE = {
   width: '40%',
   height: '100%',
@@ -37,7 +41,9 @@ class CustomDrawer extends React.Component {
   render() {
     return (
       <div style={CONTAINER_STYLE}>
-        <Table mapVisible={this.changeMapVisible} isVisible={this.state.isVisible}/>
+        <div style={TABLE_CONTAINER_STYLE}>
+          <Table options={this.props.tableOptions} mapVisible={this.changeMapVisible} isVisible={this.state.isVisible}/>
+        </div>
         {this.state.isVisible && 
           <Resizable
             style={RESIZABLE_STYLE}
