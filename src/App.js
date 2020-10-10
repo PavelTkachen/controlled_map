@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from './Container/LeafleatTable'
 import './App.css';
+import { MapAction } from './Components/TableActions';
 
 const COLUMNS = [
   {
@@ -44,13 +45,22 @@ const DATA = [
   ["James Houston", "Test Corp", "Dallas", "TX"],
 ];
 
-const OPTIONS = {}
+const OPTIONS = {
+  disableToolbarSelect: true,
+  selectableRows: 'single',
+  selectableRowsOnClick: true,
+  customToolbar: () => (
+    <React.Fragment>
+      <MapAction title="Карта" />
+    </React.Fragment>
+  ),
+}
 
 const TABLE_OPTIONS = {
   columns:COLUMNS,
   data:DATA,
   options:OPTIONS,
-  title: 'Адреса'
+  title: "Адреса"
 }
 
 const MAP_OPTIONS = {}

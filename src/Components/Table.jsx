@@ -3,11 +3,20 @@ import MUIDataTable from  "mui-datatables";
 
 class Table extends Component {
   render() {
-    const { textLabels, options:{data, columns, options, title = this.props.title} } = this.props;
+    const {
+      textLabels,
+      options:{
+        data,
+        columns,
+        options,
+        title = title
+      }
+    } = this.props;
     return (
       <MUIDataTable
         title={title}
         data={data}
+
         columns={columns}
         options={{...options, textLabels}}
       />
@@ -21,7 +30,6 @@ Table.defaultProps = {
   title: 'Таблица',
   data: [],
   columns: [],
-  options: {},
   textLabels: {
     body: {
       noMatch: "Ничего не найдено",
