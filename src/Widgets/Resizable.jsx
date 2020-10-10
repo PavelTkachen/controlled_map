@@ -4,7 +4,7 @@ import Table from '../Components/Table';
 import Map from '../Components/Map';
 import { Resizable } from 're-resizable';
 
-const STYLE = {
+const RESIZABLE_STYLE = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -15,28 +15,44 @@ const HORIZONTAL_OPTIONS = {
   right: true,
 };
 
-export default function CustomDrawer() {
-  return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        overflow: 'hidden',
-      }}
-    >
-      <Resizable
-        style={STYLE}
-        defaultSize={{
-          width: '60%',
-          height: '100%',
-        }}
-        maxWidth="80%"
-        minWidth="55%"
-        enable={HORIZONTAL_OPTIONS || false}
-      >
-        <Table />
-      </Resizable>
-      <Map />
-    </div>
-  );
+const CONTAINER_STYLE = {
+  width: '100%',
+  display: 'flex',
+  overflow: 'hidden',
 }
+
+const DEFAULT_SIZE = {
+  width: '40%',
+  height: '100%',
+}
+class CustomDrawer extends React.Component {
+  state = {
+    isVisible: true
+  }
+  changeMapVisible = (value) => {
+    this.setState({
+      isVisible: value
+    })
+  }
+  render() {
+    return (
+      <div style={CONTAINER_STYLE}>
+        <Table mapVisible={this.changeMapVisible} isVisible={this.state.isVisible}/>
+        {this.state.isVisible && 
+          <Resizable
+            style={RESIZABLE_STYLE}
+            defaultSize={DEFAULT_SIZE}
+            maxWidth="40%"
+            minWidth="20%"
+            enable={HORIZONTAL_OPTIONS}
+          >
+            <Map />
+          </Resizable>
+        }
+        
+      </div>
+    );
+  }
+}
+
+export default CustomDrawer;
