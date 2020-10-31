@@ -22,7 +22,8 @@ const CONTAINER_STYLE = {
 }
 
 const TABLE_CONTAINER_STYLE = {
-  width: '80%',
+  minWidth: '60%',
+  width: '100% '
 }
 
 const DEFAULT_SIZE = {
@@ -30,21 +31,13 @@ const DEFAULT_SIZE = {
   height: '100%',
 }
 class CustomDrawer extends React.Component {
-  state = {
-    isVisible: true
-  }
-  changeMapVisible = (value) => {
-    this.setState({
-      isVisible: value
-    })
-  }
   render() {
     return (
       <div style={CONTAINER_STYLE}>
         <div style={TABLE_CONTAINER_STYLE}>
-          <Table options={this.props.tableOptions} mapVisible={this.changeMapVisible} isVisible={this.state.isVisible}/>
+          <Table options={this.props.tableOptions} />
         </div>
-        {this.state.isVisible && 
+        {this.props.enabledMap && 
           <Resizable
             style={RESIZABLE_STYLE}
             defaultSize={DEFAULT_SIZE}

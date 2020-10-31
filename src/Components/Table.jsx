@@ -16,7 +16,6 @@ class Table extends Component {
       <MUIDataTable
         title={title}
         data={data}
-
         columns={columns}
         options={{...options, textLabels}}
       />
