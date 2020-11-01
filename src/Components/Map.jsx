@@ -1,36 +1,41 @@
 import React, { Component } from 'react';
-import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map as LeafletMap, TileLayer, Marker, Popup, LayersControl, LayerGroup } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
+import 'react-leaflet-markercluster/dist/styles.min.css';
 
-const MARKERS = [
-  {
-    title:'Саратов',
-    position: [51.5406, 46.0086],
-    description: 'Город на Волге'
-  },
-  {
-    title:'Энгельс',
-    position: [51.4839, 46.1053],
-    description: 'Рядом с Саратовом'
-  },
-  {
-    title:'Волгоград',
-    position: [48.7194, 44.5018],
-    description: 'Недалеко от Саратова, но дальше чем Энгельс'
-  },
-];
+const { Overlay } = LayersControl;
 
+const getMarker = (selectedObject) => {
+  return (
+    <Marker position={selectedObject.position}>
+      <Popup>
+        <div>
+          Название: <span>{selectedObject.city}</span>
+        </div>
+        <div>
+          Описание: <span>{selectedObject.description}</span>
+        </div>
+      </Popup>
+    </Marker>
+  );
+};
+const getMarkers = (data) => {
+  return data.map((value) => (
+    <Marker key={value.id} position={value.position}>
+      <Popup>
+        <div>
+          Название: <span>{value.city}</span>
+        </div>
+        <div>
+          Описание: <span>{value.description}</span>
+        </div>
+      </Popup>
+    </Marker>
+  ));
+};
 class Map extends Component {
-  getMarkers = () => {
-    return MARKERS.map((value) => (
-      <Marker position={value.position}>
-        <Popup>
-          <div>Название: <span>{value.title}</span></div>
-          <div>Описание: <span>{value.description}</span></div>
-        </Popup>
-      </Marker>
-    ))
-  }
   render() {
+    const { selectedRowIndex, options } = this.props;
     return (
       <LeafletMap
         center={[51.5406, 46.0086]}
@@ -43,14 +48,26 @@ class Map extends Component {
         animate={true}
       >
         <TileLayer
-          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-          attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
-        {this.getMarkers()}
+        {selectedRowIndex !== null && getMarker(options.data[selectedRowIndex])}
+        <LayersControl onbaselayerchange={(e) => console.log(e)}>
+          <Overlay name="Объекты">
+            <LayerGroup>
+              <MarkerClusterGroup
+                spiderLegPolylineOptions={{
+                  weight: 0,
+                  opacity: 0,
+                }}
+              >
+                {getMarkers(options.data.filter((index) => index !== selectedRowIndex))}
+              </MarkerClusterGroup>
+            </LayerGroup>
+          </Overlay>
+        </LayersControl>
       </LeafletMap>
     );
   }
-
 }
-
-export default Map
+export default Map;

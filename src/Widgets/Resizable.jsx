@@ -19,25 +19,33 @@ const CONTAINER_STYLE = {
   width: '100%',
   display: 'flex',
   overflow: 'hidden',
-}
+};
 
 const TABLE_CONTAINER_STYLE = {
   minWidth: '60%',
-  width: '100% '
-}
+  width: '100% ',
+};
 
 const DEFAULT_SIZE = {
   width: '40%',
   height: '100%',
-}
+};
 class CustomDrawer extends React.Component {
+  state = {
+    rowIndex: null,
+  };
+  onSelectedObjectInTable = (rowIndex) => {
+    this.setState({
+      rowIndex: rowIndex,
+    });
+  };
   render() {
     return (
       <div style={CONTAINER_STYLE}>
         <div style={TABLE_CONTAINER_STYLE}>
-          <Table options={this.props.tableOptions} />
+          <Table options={this.props.tableOptions} onSelectedObject={this.onSelectedObjectInTable} />
         </div>
-        {this.props.enabledMap && 
+        {this.props.enabledMap && (
           <Resizable
             style={RESIZABLE_STYLE}
             defaultSize={DEFAULT_SIZE}
@@ -45,10 +53,9 @@ class CustomDrawer extends React.Component {
             minWidth="20%"
             enable={HORIZONTAL_OPTIONS}
           >
-            <Map />
+            <Map options={this.props.mapOptions} selectedRowIndex={this.state.rowIndex} />
           </Resizable>
-        }
-        
+        )}
       </div>
     );
   }
