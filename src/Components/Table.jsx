@@ -5,7 +5,7 @@ class Table extends Component {
   render() {
     const {
       textLabels,
-      options: { data, columns, options, title = title },
+      options: { data, columns, options, title },
     } = this.props;
     return (
       <MUIDataTable

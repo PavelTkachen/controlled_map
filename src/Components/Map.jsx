@@ -5,6 +5,9 @@ import 'react-leaflet-markercluster/dist/styles.min.css';
 
 const { Overlay } = LayersControl;
 
+const DEFAULT_POSITION = [51.5406, 46.0086];
+const DEFAULT_ZOOM = 12;
+
 const getMarker = (selectedObject) => {
   return (
     <Marker position={selectedObject.position}>
@@ -38,8 +41,8 @@ class Map extends Component {
     const { selectedRowIndex, options } = this.props;
     return (
       <LeafletMap
-        center={[51.5406, 46.0086]}
-        zoom={12}
+        center={options.data[selectedRowIndex]?.position || DEFAULT_POSITION}
+        zoom={DEFAULT_ZOOM}
         attributionControl={true}
         zoomControl={true}
         doubleClickZoom={true}
