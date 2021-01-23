@@ -15,6 +15,7 @@ class Table extends Component {
         options={{
           ...options,
           textLabels,
+          rowsSelected:[this.props.selectedRowIndex],
           onRowSelectionChange: (row, selectedRow) => {
             selectedRow.length > 0 ? this.props.onSelectedObject(row[0].index) : this.props.onSelectedObject(null);
           },

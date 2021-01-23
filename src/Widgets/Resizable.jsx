@@ -43,7 +43,7 @@ class CustomDrawer extends React.Component {
     return (
       <div style={CONTAINER_STYLE}>
         <div style={TABLE_CONTAINER_STYLE}>
-          <Table options={this.props.tableOptions} onSelectedObject={this.onSelectedObjectInTable} />
+          <Table options={this.props.tableOptions} onSelectedObject={this.onSelectedObjectInTable} selectedRowIndex={this.state.rowIndex}/>
         </div>
         {this.props.enabledMap && (
           <Resizable
@@ -53,7 +53,7 @@ class CustomDrawer extends React.Component {
             minWidth="20%"
             enable={HORIZONTAL_OPTIONS}
           >
-            <Map options={this.props.mapOptions} selectedRowIndex={this.state.rowIndex} />
+            <Map options={this.props.mapOptions} onSelectedObject={this.onSelectedObjectInTable} selectedRowIndex={this.state.rowIndex} />
           </Resizable>
         )}
       </div>

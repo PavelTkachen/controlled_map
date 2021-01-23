@@ -8,35 +8,33 @@ const { Overlay } = LayersControl;
 const DEFAULT_POSITION = [51.5406, 46.0086];
 const DEFAULT_ZOOM = 12;
 
-const getMarker = (selectedObject) => {
-  return (
-    <Marker position={selectedObject.position}>
-      <Popup>
-        <div>
-          Название: <span>{selectedObject.city}</span>
-        </div>
-        <div>
-          Описание: <span>{selectedObject.description}</span>
-        </div>
-      </Popup>
-    </Marker>
-  );
-};
-const getMarkers = (data) => {
-  return data.map((value) => (
-    <Marker key={value.id} position={value.position}>
-      <Popup>
-        <div>
-          Название: <span>{value.city}</span>
-        </div>
-        <div>
-          Описание: <span>{value.description}</span>
-        </div>
-      </Popup>
-    </Marker>
-  ));
-};
+
 class Map extends Component {
+  selectTableRow = (e) => {
+    const {onSelectedObject} = this.props;
+    const rowId = e.target.options.id;
+    onSelectedObject(rowId);
+  }
+  
+  getMarker = (selectedObject) => {
+    return (
+      <Marker onCLick={this.selectTableRow} key={selectedObject?.id} position={selectedObject?.position} id={selectedObject?.id}>
+        <Popup>
+          <div>
+            Название: <span>{selectedObject.city}</span>
+          </div>
+          <div>
+            Описание: <span>{selectedObject.description}</span>
+          </div>
+        </Popup>
+      </Marker>
+    );
+  };
+  getMarkers = (data) => {
+    return data.map((value) => (
+      this.getMarker(value)
+    ));
+  };
   render() {
     const { selectedRowIndex, options } = this.props;
     return (
@@ -54,8 +52,8 @@ class Map extends Component {
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
-        {selectedRowIndex !== null && getMarker(options.data[selectedRowIndex])}
-        <LayersControl onbaselayerchange={(e) => console.log(e)}>
+        {selectedRowIndex !== null && this.getMarker(options.data[selectedRowIndex])}
+        <LayersControl>
           <Overlay name="Объекты">
             <LayerGroup>
               <MarkerClusterGroup
@@ -64,7 +62,7 @@ class Map extends Component {
                   opacity: 0,
                 }}
               >
-                {getMarkers(options.data.filter((index) => index !== selectedRowIndex))}
+                {this.getMarkers(options.data.filter((index) => index !== selectedRowIndex))}
               </MarkerClusterGroup>
             </LayerGroup>
           </Overlay>
