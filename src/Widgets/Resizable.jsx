@@ -40,6 +40,7 @@ class CustomDrawer extends React.Component {
     });
   };
   render() {
+    console.log(this.props)
     return (
       <div style={CONTAINER_STYLE}>
         <div style={TABLE_CONTAINER_STYLE}>

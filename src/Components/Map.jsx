@@ -7,18 +7,20 @@ const { Overlay } = LayersControl;
 
 const DEFAULT_POSITION = [51.5406, 46.0086];
 const DEFAULT_ZOOM = 12;
-
-
+const ALL_MARKS = true;
 class Map extends Component {
-  selectTableRow = (e) => {
-    const {onSelectedObject} = this.props;
-    const rowId = e.target.options.id;
-    onSelectedObject(rowId);
-  }
-  
-  getMarker = (selectedObject) => {
+  selectTableRow = (value) => {
+    const { onSelectedObject } = this.props;
+    onSelectedObject(value);
+  };
+
+  getMarker = (selectedObject, flag, index) => {
     return (
-      <Marker onCLick={this.selectTableRow} key={selectedObject?.id} position={selectedObject?.position} id={selectedObject?.id}>
+      <Marker
+        onCLick={flag ? () => this.selectTableRow(index) : null}
+        key={selectedObject?.id}
+        position={selectedObject?.position}
+      >
         <Popup>
           <div>
             Название: <span>{selectedObject.city}</span>
@@ -30,10 +32,8 @@ class Map extends Component {
       </Marker>
     );
   };
-  getMarkers = (data) => {
-    return data.map((value) => (
-      this.getMarker(value)
-    ));
+  getMarkers = (data, flag) => {
+    return data.map((value, index) => this.getMarker(value, flag, index));
   };
   render() {
     const { selectedRowIndex, options } = this.props;
@@ -62,7 +62,7 @@ class Map extends Component {
                   opacity: 0,
                 }}
               >
-                {this.getMarkers(options.data.filter((index) => index !== selectedRowIndex))}
+                {this.getMarkers(options.data.filter((index) => index !== selectedRowIndex), ALL_MARKS)}
               </MarkerClusterGroup>
             </LayerGroup>
           </Overlay>
